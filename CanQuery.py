@@ -8,8 +8,8 @@ def on_message(client, userdata, msg):
     for frame in bus:
 
         if frame.arbitration_id == int(msg.payload.decode("utf-8")):
-
-            stringa = "{}: {:02X} {:02X}".format(frame.arbitration_id, frame.data[0], frame.data[1])
+            # stringa = "{}: {:02X} {:02X}".format(frame.arbitration_id, frame.data[0], frame.data[1])
+            stringa =  frame.data[0]*256+frame.data[1]
             print(stringa)
             client.publish("speaker", stringa)
             break
@@ -28,10 +28,10 @@ client.on_connect = on_connect
 
 client.on_message = on_message
 
-client.username_pw_set("Rettorato", "Nucleare")
+# client.username_pw_set("Rettorato", "Nucleare")
 
-client.connect("broker.shiftr.io", 1883, 60)
-
+# client.connect("broker.shiftr.io", 1883, 160)
+client.connect("localhost", 1883, 160)
 client.subscribe('listener')
 
 
